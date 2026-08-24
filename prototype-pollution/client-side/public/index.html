@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Acme Store - Search</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 760px; margin: 40px auto; }
+    input { padding: 8px; width: 300px; }
+    button { padding: 8px 14px; }
+    #results { margin-top: 24px; padding: 16px; border: 1px solid #ddd; }
+    .hint { color: #666; }
+  </style>
+</head>
+<body>
+  <h1>Acme Store</h1>
+  <p class="hint">Search results are shareable through the URL.</p>
+
+  <form id="searchForm">
+    <input id="q" name="q" placeholder="Search products">
+    <button>Search</button>
+  </form>
+
+  <div id="results"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
