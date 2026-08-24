@@ -1,15 +1,13 @@
 /*
- * Scenario:
- * The store keeps search state in the URL so users can share filtered searches.
  * A small custom parser turns nested query parameters into JavaScript objects.
  *
  * Intentionally vulnerable:
- * setDeep() does not reject dangerous property names such as __proto__.
  */
 
 function setDeep(target, keys, value) {
   let current = target;
 
+  // FIXME: does not reject dangerous property names such as __proto__.
   for (let i = 0; i < keys.length - 1; i++) {
     const key = keys[i];
 
@@ -78,24 +76,9 @@ function renderProducts(products) {
   return list;
 }
 
-/*
- * Intentionally vulnerable:
- * The request options object starts empty and user-supplied settings are
- * merged into it without rejecting dangerous keys. Any option not set as an
- * own property (method, headers, credentials, ...) is resolved through the
- * prototype chain when fetch() reads it.
- *
- * Direct injection:      /?request[method]=DELETE
- * Prototype pollution:   /?__proto__[headers][X-Debug]=pwned
- */
 async function fetchProducts(term) {
-  const params = parseSearchParams(location.search);
-  const settings = params.request || {};
+  // FIXME: pollutable object used in fetch API
   const options = {};
-
-  for (const key of Object.keys(settings)) {
-    setDeep(options, [key], settings[key]);
-  }
 
   try {
     const response = await fetch(
@@ -112,10 +95,13 @@ async function fetchProducts(term) {
 function render() {
   const params = parseSearchParams(location.search);
 
-  // Normal application object. It has no own `html` or `preview` property.
+  // FIXME: Object missing properties which can be polluted
   const config = {
     term: params.q || ""
   };
+
+  // FIXME: Flawed protection for preview property
+  Object.defineProperty(config, preview, { writable: false });
 
   renderSearchState(config);
   renderPreview(config);

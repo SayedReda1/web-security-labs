@@ -18,8 +18,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/api/products", (req, res) => {
   const q = typeof req.query.q === "string" ? req.query.q.trim() : "";
 
-  console.log(`[api] ${req.method} /api/products headers=${JSON.stringify(req.headers)}`);
-
   if (q) {
     searches.push({
       term: q,
