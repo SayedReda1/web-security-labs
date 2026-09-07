@@ -1,0 +1,12 @@
+services:
+  app:
+    build: ./app
+    expose:
+      - "5000"
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "8000:80"
+    depends_on:
+      - app
