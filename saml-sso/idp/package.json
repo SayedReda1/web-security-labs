@@ -1,0 +1,20 @@
+{
+  "name": "saml-idp",
+  "version": "1.0.0",
+  "description": "saml identity provider",
+  "license": "ISC",
+  "author": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@authenio/samlify-node-xmllint": "^2.0.0",
+    "body-parser": "^2.3.0",
+    "connect-flash": "^0.1.1",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "samlify": "^2.13.1"
+  }
+}
