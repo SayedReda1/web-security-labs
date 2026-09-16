@@ -77,16 +77,23 @@ app.get('/login', async (req, res) => {
 
 app.get('/acs', async (req, res) => {
   try {
-    const idp = await getIdentityProvider()
+    const idp = await getIdentityProvider();
+
+    // 1. Extract the raw query string from req.url
+    const rawQuery = req.url.split('?')[1] || '';
+
+    // 2. The octetString that was signed is everything before "&Signature="
+    const sigIndex = rawQuery.indexOf('&Signature=');
+    req.octetString = sigIndex !== -1 ? rawQuery.substring(0, sigIndex) : rawQuery;
+
+    // 3. Now samlify has req.octetString to verify against req.query.Signature
     const { extract } = await sp.parseLoginResponse(idp, 'redirect', req);
 
-    // "extract" contains the verified NameID and attributes from the assertion.
-    // If the signature or conditions were invalid, parseLoginResponse would have thrown.
     req.session.user = {
       email: extract.nameID,
-      displayName: extract.attributes.displayName,
-      role: extract.attributes.role,
-      isAdmin: extract.attributes.role === 'admin'
+      displayName: extract.attributes?.displayName,
+      role: extract.attributes?.role,
+      isAdmin: extract.attributes?.role === 'admin'
     };
 
     res.redirect('/dashboard');
