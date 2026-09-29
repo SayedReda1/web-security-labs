@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>victim</title>
+</head>
+
+<body>
+    <h3 id="h3">Waiting for a message... 😔</h3>
+
+    <script>
+        window.addEventListener('message', function (e) {
+            document.querySelector("#h3").innerHTML = "I got a message 😁";
+
+            const p = document.createElement('p');
+            p.innerHTML = `
+                <b>Origin: </b>${e.origin}<br>
+                <b>Content: </b>${e.data}<br>
+            `;
+
+            document.body.appendChild(p);
+        });
+    </script>
+</body>
+
+</html>
